@@ -1,0 +1,155 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>ueditor图片对话框</title>
+   
+
+    <style>
+      html,body,div,h1,h2,h3,h4,h5,h6,p,ul,ol,li,dl,dd,dt,menu,table,caption,colgroup,col,thead,tbody,tfoot,tr,th,td,menu,blockquote,hr,pre,q,address,iframe,map,area,b,i,del,ins,span,a,em,strong,form,legend,fieldset,input,button,label,select,optgroup,option,textarea,object,param,var,article,aside,audio,bdi,canvas,command,datalist,details,embed,fiqure,fiqcaption,header,footer,hgroup,keyqen,mark,meter,nav,output,progress,rp,rt,ruby,section,source,summary,time,track,video{margin:0;padding:0;background:transparent;outline:0;font-size:14px;font-family:SimSun;}
+ul,ol,li{list-style:none outside none}
+fieldset,em{border:0 none;font-style:normal}
+table{border-collapse:collapse}
+a img{border:0 none}
+a:link,a:hover,a:active,a:visited{text-decoration:none}
+a:focus{font-style:inherit}
+p:before,p:after{display:none;content:".";font-size:0}
+input[text],input[button],input[checkbox],input[password]{background:#fff}
+input[radio],input[checkbox],input[reset],input[submit]{border:0 none}
+.clear{clear:both;margin:0;padding:0;font-size:0;line-height:0;visibility:hidden}
+.clearfix:after{content:".";clear:both;display:block;height:0;font-size:0}
+.cf:before,.cf:after{content:".";display:table}
+.cf:after{clear:both}
+
+html,body{
+  font-family:"冬青黑体简体中文",'Hiragino Sans GB', 'Microsoft Yahei UI', 'Microsoft Yahei', 微软雅黑, 'Segoe UI', Tahoma, 宋体b8b体, SimSun, sans-serif;
+}
+body {
+  background: #fff;
+  padding:20px;
+  position: relative;
+}
+
+</style>
+</head>
+
+<body>
+    <!-- button模板 -->
+    <template id="btn_tpl">
+        <style>
+           button{
+            border:none;
+            width:100px;
+            height: 40px;
+            border-radius: 8px;
+           }
+           button:hover{
+            border: rgb(200, 112, 252) 2px solid;
+           }
+        </style>
+        <slot name="btn-content">button content</slot>
+   </template>
+   <!-- <template id="modal_tpl">
+        <style>
+            .mask{
+                position: fixed;
+                width: 100%;
+                height: 100%;
+                top: 0;
+                left: 0;
+                background: rgba(0,0,0,0.5);
+            }
+            .dialog{
+                position: absolute;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%,-80%);
+                border-radius: 8px;
+                background: #fff;
+                min-width: 550px;
+            }
+            .head{
+                height: 30px;
+                padding: 10px;
+                display: flex;
+                justify-content: space-between;
+                border-bottom: 1px solid rgb(218, 215, 215);
+                font-size: 16px;
+            }
+            .head_close:hover{
+                cursor: pointer;
+                color: rgb(145, 145, 150);
+            }
+            .body{
+                padding: 10px;
+                min-height: 100px;
+            }
+            .footer{
+                padding: 10px;
+                display: flex;
+                justify-content:flex-end;
+                align-items: center;
+                height: 50px;
+                border-top: 1px solid rgb(218, 215, 215);;
+            }
+            .footer_yes,.footer_cancel{
+                width: 80px;
+                height: 40px;
+                border:none;
+                color: white;
+                border-radius: 8px;
+            }
+            .footer_yes{
+                background-color: cadetblue;
+            }
+            .footer_cancel{
+                background-color: gray;
+                margin-left: 20px;
+            }
+            .footer_yes:hover,.footer_cancel:hover{
+                cursor: pointer;
+                border: 1px solid paleturquoise;
+            }
+        </style>
+        <div class="mask">
+            <div class="dialog">
+            <header class="head">
+                <span class="head_title"><slot name="modal-title"></slot></span>
+                <span class="head_close">X</span>
+            </header>
+            <div class="body"> 
+                <slot name="modal-content">modal content</slot>
+            </div>
+            <footer class="footer">
+                <button class="footer_yes">确定</button>
+                <button class="footer_cancel">取消</button>
+            </footer>
+           </div>
+        </div>
+   </template> -->
+  <my-button type="primary"><span slot="btn-content">成功</span></my-button>
+  <my-button type="warning"><span slot="btn-content">警告</span></my-button>
+  <my-button type="default" id='btn1'><span slot="btn-content">展示弹窗</span></my-button>
+  <my-modal width="500" isshow='false' class="modal">
+      <span slot="modal-title">这是标题</span>
+      <div slot="modal-content">
+          <p>这是一个弹窗内容</p>
+          <my-button type="primary"><span slot="btn-content">按钮组件</span></my-button>
+     </div>
+ </my-modal>
+ <!-- 问题：1.script为什么要在下面引入没想来？2.如何通过脚本的形式把template插入 -->
+  <script src='./components/Button.js'></script>
+  <script src='./components/Modal.js'></script>
+  <script>
+      let btn = document.getElementById('btn1')
+      let myModal = document.querySelector('.modal')
+
+      btn.addEventListener('click', function(){
+          console.log('点击了按钮',document.querySelector('.modal').getAttribute('isshow'))
+         // document.querySelector('.modal').setAttribute('isshow', 'true')
+         myModal.isshow = 'true'
+          console.log('点击了按钮',document.querySelector('.modal').getAttribute('isshow'))
+      })
+  </script>
+</body>
+</html>
